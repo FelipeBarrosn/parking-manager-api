@@ -1,40 +1,42 @@
 package com.felipeparking.parkingmanager.entities;
 
-import java.util.List;
+import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "parking")
+@Table(name = "employee")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Parking {
-
+public class Employee {
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Boolean active = true;
 	private String name;
-	private String cnpj;
-	private String address;
-	private String phone;
-	private Long motocyclesCapacity;
-	private Long carsCapacity;
+	private Date dateOfBirth;
+	private String password;
+	private String email;
+	private boolean active = true;
 	
-	@OneToMany(mappedBy = "parking", fetch = FetchType.LAZY)
-	private List<Employee> employee;
+	@JoinColumn(name = "Parking_id")
+	@ManyToOne
+	private Parking parking;
+	
+	
 	
 }

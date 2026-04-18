@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.felipeparking.parkingmanager.dto.CreateEmployeeDto;
 import com.felipeparking.parkingmanager.dto.CreateParkingDto;
 import com.felipeparking.parkingmanager.dto.DetailsParkingDto;
 import com.felipeparking.parkingmanager.dto.ListParkingDto;
 import com.felipeparking.parkingmanager.dto.UpdateParkingDto;
+import com.felipeparking.parkingmanager.entities.Employee;
 import com.felipeparking.parkingmanager.entities.Parking;
 import com.felipeparking.parkingmanager.repositories.ParkingRepository;
 
@@ -21,7 +23,7 @@ public class ParkingService {
 		this.parkingRepository = repository;
 	}
 
-	public Parking insert(CreateParkingDto createparkingdto) {
+	public Long insert(CreateParkingDto createparkingdto) {
 		Parking parking = new Parking();
 		parking.setCnpj(createparkingdto.cnpj());
 		parking.setName(createparkingdto.name());
@@ -30,7 +32,7 @@ public class ParkingService {
 		parking.setCarsCapacity(createparkingdto.carsCapacity());
 		parking.setMotocyclesCapacity(createparkingdto.motocyclesCapacity());
 		parkingRepository.save(parking);
-		return parking;
+		return parking.getId();
 	}
 
 	public List<ListParkingDto> findAll() {
@@ -64,6 +66,8 @@ public class ParkingService {
 		parking.setAddress(updateparkingdto.address());
 		parking.setPhone(updateparkingdto.phone());
 		parking.setMotocyclesCapacity(updateparkingdto.motocyclesCapacity());
+		parking.setCarsCapacity(updateparkingdto.carsCapacity());
 		return parkingRepository.save(parking);
 	}
+
 }
